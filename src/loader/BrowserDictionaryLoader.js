@@ -37,6 +37,7 @@ BrowserDictionaryLoader.prototype = Object.create(DictionaryLoader.prototype);
  * @param {BrowserDictionaryLoader~onLoad} callback Callback function
  */
 BrowserDictionaryLoader.prototype.loadArrayBuffer = function (url, callback) {
+    url = url.replace('.gz', '')
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.responseType = "arraybuffer";
@@ -46,9 +47,6 @@ BrowserDictionaryLoader.prototype.loadArrayBuffer = function (url, callback) {
             return;
         }
         var arraybuffer = this.response;
-
-        //var gz = new zlib.Zlib.Gunzip(new Uint8Array(arraybuffer));
-        //var typed_array = gz.decompress();
         callback(null, arraybuffer);
     };
     xhr.onerror = function (err) {
